@@ -17,26 +17,26 @@
                     </a>
                 </div>
 
-                <div class="mt-2 py-2 bg-primary rounded">
-                    <a class="nav-link" href="/">
+                <div class="mt-2 py-2">
+                    <a class="nav-link" href="../">
                         <img class="icon" src="/static/images/house-door.svg" width="30" height="24">
                         Главная
                     </a>
                 </div>
                 <div class="mt-2 py-2">
-                    <a class="nav-link" href="categories/">
+                    <a class="nav-link" href="../categories/">
                         <img class="icon" src="/static/images/speedometer2.svg" width="30" height="24">
                         Категории
                     </a>
                 </div>
                 <div class="mt-2 py-2">
-                    <a class="nav-link" href="catalog/">
+                    <a class="nav-link" href="../catalog/">
                         <img class="icon" src="/static/images/table.svg" width="30" height="24">
                         Каталог
                     </a>
                 </div>
-                <div class="mt-2 py-2">
-                    <a class="nav-link" href="contacts/">
+                <div class="mt-2 py-2 bg-primary rounded">
+                    <a class="nav-link" href="../contacts/">
                         <img class="icon" src="/static/images/person-circle.svg" width="30" height="24">
                         Контакты
                     </a>
@@ -59,47 +59,62 @@
         </div>
     </aside>
     <main>
-        <div class="pt-5 row">
+
+        <div class="pt-5 pb-5 row">
             <div class="col-2"></div>
             <div class="col-10">
-                <h1 class="pt-5 mt-4 text-center">Главная</h1>
-                <p class="text-secondary pb-3 text-center">Вы находитесь на сайте, предназначенном для продажи товаров.</p>
+                <h1 class="pt-5 pb-5 text-center">Контакты</h1>
             </div>
         </div>
         <div class="row">
             <div class="col-3"></div>
-            <div class="card col-2 ps-0 pe-0 text-center ms-3 me-5">
-                <div class="card-header">
-                  iPhone 16 Pro
-                </div>
-                <div class="card-body">
-                    <h2>240 000 руб.</h2>
-                    <p>Apple iPhone 16 SIM Pro 1 ТБ, «титановый белый»</p>
-                    <button type="button" class="btn btn-outline-primary w-100">Купить</button>
+            <div class="col-4 ms-5 me-5">
+                <div class="card px-3 py-3 w-100">
+                    <form action="#" method="post">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Имя</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
+                        </div>
+
+                        <label for="email" class="form-label">Почта</label>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">@</span>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message" class="form-label">Сообщение</label>
+                            <textarea class="form-control" id="message" name="message" rows="2" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Отправить</button>
+                    </form>
                 </div>
             </div>
-            <div class="card col-2 ps-0 pe-0 text-center ms-5 me-5">
-                <div class="card-header">
-                  iPhone 16
-                </div>
-                <div class="card-body">
-                    <h2>120 000 руб.</h2>
-                    <p>Apple iPhone 16 SIM 128 ГБ, бирюзовый</p>
-                    <button type="button" class="btn btn-outline-primary w-100">Купить</button>
-                </div>
-            </div>
-            <div class="card col-2 ps-0 pe-0 text-center ms-5 me-5">
-                <div class="card-header">
-                  iPhone 16 Pro Max
-                </div>
-                <div class="card-body">
-                    <h2>270 000 руб.</h2>
-                    <p>Apple iPhone 16 Pro Max SIM 1 ТБ, «титановый белый»</p>
-                    <button type="button" class="btn btn-outline-primary w-100">Купить</button>
-                </div>
+
+            <div class="col-3 ms-5 me-5">
+                <h3>Наши контакты</h3>
+                <p>Адреса нет</p>
+                <p>Телефонов для связи нет</p>
+                <p>Почты тоже нет</p>
+                <p>И гарантии нет</p>
+                <p>Как и самих товаров</p>
+                <p>Если что-то купили - покупайте еще</p>
+                <p>И друзьям предлагайте</p>
             </div>
         </div>
     </main>
     <script src="/static/js/bootstrap.bundle.min.js"></script>
+    <script>
+        window.addEventListener('load', () => {
+          if (performance.navigation.type === 2) {
+            document.querySelector('form').reset();
+          }
+        });
+        window.addEventListener('pageshow', (event) => {
+          if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+            document.querySelector('form').reset();
+          }
+        });
+    </script>
 </body>
 </html>
