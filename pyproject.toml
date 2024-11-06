@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "alyautdinov-ruslan-hw-28"
+name = "alyautdinov-ruslan-hw-29"
 version = "0.1.0"
 description = ""
 authors = ["Аляутдинов Руслан <rusalyautdinov@yandex.ru>"]
@@ -9,6 +9,8 @@ readme = "README.md"
 python = "^3.11"
 django = "^5.1.2"
 python-dotenv = "^1.0.1"
+psycopg2 = "^2.9.10"
+pillow = "^11.0.0"
 
 
 [tool.poetry.group.lint.dependencies]
