@@ -31,7 +31,7 @@ class Product(models.Model):
                               blank=True,
                               null=True,
                               verbose_name="Изображение товара")
-    category = models.ForeignKey(Category, on_delete=models.PROTECT, related_name="products")
+    category = models.ForeignKey(Category, on_delete=models.PROTECT, verbose_name="Категория", related_name="products")
     price_per_unit = models.IntegerField(verbose_name="Цена за штуку")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
     updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
