@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="/static/css/bootstrap.min.css" rel="stylesheet">
     <title>Homework 27 Alyautdinov R.T.</title>
+    <style>
+        .preformatted-text {
+            white-space: pre-wrap;
+        }
+        .line-height-250 {
+            line-height: 250%
+        }
+    </style>
 </head>
 <body>
     <aside> <!-- Боковая панель (сайдбар) -->
@@ -93,13 +101,10 @@
 
             <div class="col-3 ms-5 me-5">
                 <h3>Наши контакты</h3>
-                <p>Адреса нет</p>
-                <p>Телефонов для связи нет</p>
-                <p>Почты тоже нет</p>
-                <p>И гарантии нет</p>
-                <p>Как и самих товаров</p>
-                <p>Если что-то купили - покупайте еще</p>
-                <p>И друзьям предлагайте</p>
+                <p>{{ contact.address }}</p>
+                <p>{{ contact.phone_number }}</p>
+                <p>{{ contact.email }}</p>
+                <div class="preformatted-text line-height-250">{{ contact.description }}</div>
             </div>
         </div>
     </main>

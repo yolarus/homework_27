@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpRequest
-from .models import Product, Category
+from .models import Product, Category, ContactData
 
 
 # Create your views here.
@@ -53,4 +53,6 @@ def contacts(request: HttpRequest) -> HttpResponse:
         print(f"Получено сообщение '{message}' от пользователя {name} ({email})")
         return HttpResponse("Ваше сообщение успешно отправлено!")
 
-    return render(request, "apple_shop/contacts.html")
+    contact = ContactData.objects.get(id=1)
+
+    return render(request, "apple_shop/contacts.html", context={"contact": contact})

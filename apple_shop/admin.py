@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Product, Category
+from .models import Product, Category, ContactData
 
 
 # Register your models here.
@@ -20,3 +20,11 @@ class CategoryAdmin(admin.ModelAdmin):
     """
     list_display = ("id", "name")
     search_fields = ("name", "description")
+
+
+@admin.register(ContactData)
+class ContactDataAdmin(admin.ModelAdmin):
+    """
+    Класс для отображения модели ContactData в интерфейсе админки
+    """
+    list_display = ("address", "phone_number", "email", "description")
