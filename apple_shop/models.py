@@ -53,7 +53,8 @@ class ContactData(models.Model):
     Модель для хранения контактных данных
     """
     address = models.CharField(null=True, max_length=150, default="Адреса нет", verbose_name="Адрес")
-    phone_number = models.CharField(null=True, max_length=50, default="Телефонов для связи нет", verbose_name="Телефон")
+    phone_number = models.CharField(null=True, max_length=50,
+                                    default="Телефонов для связи нет", verbose_name="Телефон")
     email = models.CharField(null=True, max_length=100, default="Почты тоже нет", verbose_name="Почта")
     description = models.TextField(null=True, verbose_name="Описание",
                                    default="И гарантии нет "
