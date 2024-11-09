@@ -12,32 +12,32 @@
             <nav class="navbar-expand-lg"> <!-- Меню страницы -->
                 <div class="border-bottom py-3">
                     <a class="navbar-brand" href="">
-                        <img class="icon" src="/static/images/bootstrap-logo.svg" width="30" height="24">
+                        <img class="icon" src="/static/apple_shop/images/bootstrap-logo.svg" width="30" height="24">
                         Меню
                     </a>
                 </div>
 
                 <div class="mt-2 py-2 bg-primary rounded">
                     <a class="nav-link" href="/">
-                        <img class="icon" src="/static/images/house-door.svg" width="30" height="24">
+                        <img class="icon" src="/static/apple_shop/images/house-door.svg" width="30" height="24">
                         Главная
                     </a>
                 </div>
                 <div class="mt-2 py-2">
                     <a class="nav-link" href="categories/">
-                        <img class="icon" src="/static/images/speedometer2.svg" width="30" height="24">
+                        <img class="icon" src="/static/apple_shop/images/speedometer2.svg" width="30" height="24">
                         Категории
                     </a>
                 </div>
                 <div class="mt-2 py-2">
                     <a class="nav-link" href="catalog/">
-                        <img class="icon" src="/static/images/table.svg" width="30" height="24">
+                        <img class="icon" src="/static/apple_shop/images/table.svg" width="30" height="24">
                         Каталог
                     </a>
                 </div>
                 <div class="mt-2 py-2">
                     <a class="nav-link" href="contacts/">
-                        <img class="icon" src="/static/images/person-circle.svg" width="30" height="24">
+                        <img class="icon" src="/static/apple_shop/images/person-circle.svg" width="30" height="24">
                         Контакты
                     </a>
                 </div>
@@ -45,7 +45,7 @@
                     <div class="border-top py-3">
                         <div class="btn-group dropup">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img class="icon rounded-circle" src="/static/images/punk.jpeg" width="40" height="40">
+                            <img class="icon rounded-circle" src="/static/apple_shop/images/punk.jpeg" width="40" height="40">
                             Пользователь
                             </a>
                             <ul class="dropdown-menu">
@@ -58,6 +58,7 @@
             </nav>
         </div>
     </aside>
+
     <main>
         <div class="pt-5 row">
             <div class="col-2"></div>
@@ -66,39 +67,26 @@
                 <p class="text-secondary pb-3 text-center">Вы находитесь на сайте, предназначенном для продажи товаров.</p>
             </div>
         </div>
+
         <div class="row">
+
             <div class="col-3"></div>
-            <div class="card col-2 ps-0 pe-0 text-center ms-3 me-5">
+            {% for product in products %}
+            <div class="card col-2 ps-0 pe-0 text-center ms-4 me-5 container">
                 <div class="card-header">
-                  iPhone 16 Pro
+                    {{ product.name }}
                 </div>
                 <div class="card-body">
-                    <h2>240 000 руб.</h2>
-                    <p>Apple iPhone 16 SIM Pro 1 ТБ, «титановый белый»</p>
-                    <button type="button" class="btn btn-outline-primary w-100">Купить</button>
+                    <h2>{{ product.price_per_unit }} руб.</h2>
+                    <p class="pb-4">{{ product.description }}</p>
+                    <div class="position-absolute bottom-0 start-0 w-100 container">
+                        <button type="button" class="btn btn-outline-primary w-100 my-2">Купить</button>
+                    </div>
                 </div>
             </div>
-            <div class="card col-2 ps-0 pe-0 text-center ms-5 me-5">
-                <div class="card-header">
-                  iPhone 16
-                </div>
-                <div class="card-body">
-                    <h2>120 000 руб.</h2>
-                    <p>Apple iPhone 16 SIM 128 ГБ, бирюзовый</p>
-                    <button type="button" class="btn btn-outline-primary w-100">Купить</button>
-                </div>
-            </div>
-            <div class="card col-2 ps-0 pe-0 text-center ms-5 me-5">
-                <div class="card-header">
-                  iPhone 16 Pro Max
-                </div>
-                <div class="card-body">
-                    <h2>270 000 руб.</h2>
-                    <p>Apple iPhone 16 Pro Max SIM 1 ТБ, «титановый белый»</p>
-                    <button type="button" class="btn btn-outline-primary w-100">Купить</button>
-                </div>
-            </div>
+            {% endfor %}
         </div>
+
     </main>
     <script src="/static/js/bootstrap.bundle.min.js"></script>
 </body>
