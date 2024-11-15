@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
-    <title>Homework 27 Alyautdinov R.T.</title>
+{% extends 'apple_shop/base.html' %}
+
+{% block optional_styles %}
     <style>
         .preformatted-text {
             white-space: pre-wrap;
@@ -12,114 +8,72 @@
         .line-height-250 {
             line-height: 250%
         }
+        #btn-contacts {
+        background-color: #0d6efd;
+        border-radius: 5px;
+        }
     </style>
-</head>
-<body>
-    <aside> <!-- Боковая панель (сайдбар) -->
-        <div class="position-fixed col-2 vh-100 position-relative container overflow-hidden bg-dark text-white" data-bs-theme="dark">
-            <nav class="navbar-expand-lg"> <!-- Меню страницы -->
-                <div class="border-bottom py-3">
-                    <a class="navbar-brand" href="">
-                        <img class="icon" src="/static/apple_shop/images/bootstrap-logo.svg" width="30" height="24">
-                        Меню
-                    </a>
-                </div>
+{% endblock %}
 
-                <div class="mt-2 py-2">
-                    <a class="nav-link" href="../">
-                        <img class="icon" src="/static/apple_shop/images/house-door.svg" width="30" height="24">
-                        Главная
-                    </a>
-                </div>
-                <div class="mt-2 py-2">
-                    <a class="nav-link" href="../categories/">
-                        <img class="icon" src="/static/apple_shop/images/speedometer2.svg" width="30" height="24">
-                        Категории
-                    </a>
-                </div>
-                <div class="mt-2 py-2">
-                    <a class="nav-link" href="../catalog/">
-                        <img class="icon" src="/static/apple_shop/images/table.svg" width="30" height="24">
-                        Каталог
-                    </a>
-                </div>
-                <div class="mt-2 py-2 bg-primary rounded">
-                    <a class="nav-link" href="../contacts/">
-                        <img class="icon" src="/static/apple_shop/images/person-circle.svg" width="30" height="24">
-                        Контакты
-                    </a>
-                </div>
-                <div class="position-absolute bottom-0 start-0 w-100 container">
-                    <div class="border-top py-3">
-                        <div class="btn-group dropup">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img class="icon rounded-circle" src="/static/apple_shop/images/punk.jpeg" width="40" height="40">
-                            Пользователь
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Профиль</a></li>
-                                <li><a class="dropdown-item" href="#">Выход</a></li>
-                            </ul>
-                        </div>
+{% block content %}
+<aside> <!-- Боковая панель (сайдбар) -->
+    {% include "apple_shop/tools/navbar.html" %}
+</aside>
+
+<main>
+    <div class="pt-5 pb-5 row">
+        <div class="col-2"></div>
+        <div class="col-10">
+            <h1 class="pt-5 pb-5 text-center">Контакты</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-4 ms-5 me-5">
+            <div class="card px-3 py-3 w-100">
+                <form action="#" method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Имя</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
                     </div>
-                </div>
-            </nav>
-        </div>
-    </aside>
-    <main>
 
-        <div class="pt-5 pb-5 row">
-            <div class="col-2"></div>
-            <div class="col-10">
-                <h1 class="pt-5 pb-5 text-center">Контакты</h1>
+                    <label for="email" class="form-label">Почта</label>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">@</span>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="message" class="form-label">Сообщение</label>
+                        <textarea class="form-control" id="message" name="message" rows="2" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Отправить</button>
+                </form>
             </div>
         </div>
-        <div class="row">
-            <div class="col-3"></div>
-            <div class="col-4 ms-5 me-5">
-                <div class="card px-3 py-3 w-100">
-                    <form action="#" method="post">
-                        {% csrf_token %}
-                        <div class="mb-3">
-                            <label for="name" class="form-label">Имя</label>
-                            <input type="text" class="form-control" id="name" name="name" required>
-                        </div>
 
-                        <label for="email" class="form-label">Почта</label>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">@</span>
-                                <input type="email" class="form-control" id="email" name="email" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="message" class="form-label">Сообщение</label>
-                            <textarea class="form-control" id="message" name="message" rows="2" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Отправить</button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="col-3 ms-5 me-5">
-                <h3>Наши контакты</h3>
-                <p>{{ contact.address }}</p>
-                <p>{{ contact.phone_number }}</p>
-                <p>{{ contact.email }}</p>
-                <div class="preformatted-text line-height-250">{{ contact.description }}</div>
-            </div>
+        <div class="col-3 ms-5 me-5">
+            <h3>Наши контакты</h3>
+            <p>{{ contact.address }}</p>
+            <p>{{ contact.phone_number }}</p>
+            <p>{{ contact.email }}</p>
+            <div class="preformatted-text line-height-250">{{ contact.description }}</div>
         </div>
-    </main>
-    <script src="/static/js/bootstrap.bundle.min.js"></script>
-    <script>
-        window.addEventListener('load', () => {
-          if (performance.navigation.type === 2) {
-            document.querySelector('form').reset();
-          }
-        });
-        window.addEventListener('pageshow', (event) => {
-          if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
-            document.querySelector('form').reset();
-          }
-        });
-    </script>
-</body>
-</html>
+    </div>
+</main>
+{% endblock %}
+
+{% block optional_scripts %}
+<script>
+    window.addEventListener('load', () => {
+      if (performance.navigation.type === 2) {
+        document.querySelector('form').reset();
+      }
+    });
+    window.addEventListener('pageshow', (event) => {
+      if (event.persisted || (window.performance && window.performance.navigation.type === 2)) {
+        document.querySelector('form').reset();
+      }
+    });
+</script>
+{% endblock %}
