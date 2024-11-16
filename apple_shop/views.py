@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.core.paginator import Paginator
 from django.http import HttpResponse, HttpRequest
 from .models import Product, Category, ContactData
 
@@ -9,14 +10,14 @@ def index(request: HttpRequest) -> HttpResponse:
     Рендер страницы "Главная" приложения
     """
     latest_products = Product.objects.all().order_by("-updated_at")
-    products_list = []
-    for i, product in enumerate(latest_products):
-        products_list.append(product)
-        print(product)
-        if i == 4:
-            break
 
-    return render(request, "apple_shop/index.html", context={"products": products_list[:3]})
+    paginator = Paginator(latest_products, 6)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+    context = {"page_obj": page_obj,
+               "products": latest_products}
+
+    return render(request, "apple_shop/index.html", context=context)
 
 
 def catalog(request: HttpRequest) -> HttpResponse:
