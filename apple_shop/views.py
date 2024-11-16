@@ -13,7 +13,7 @@ def index(request: HttpRequest) -> HttpResponse:
     for i, product in enumerate(latest_products):
         products_list.append(product)
         print(product)
-        if index == 4:
+        if i == 4:
             break
 
     return render(request, "apple_shop/index.html", context={"products": products_list[:3]})
@@ -31,15 +31,21 @@ def categories(request: HttpRequest) -> HttpResponse:
     Рендер страницы "категории" приложения
     """
 
-    iphone_category = Category.objects.get(name="Iphone")
+    categories = Category.objects.all()
+    products = Product.objects.all()
+    context = {"categories": categories,
+               "products": products}
 
-    latest_iphones = Product.objects.filter(category=iphone_category).order_by("-updated_at")
-    iphones_list = []
-    for i, iphone in enumerate(latest_iphones):
-        iphones_list.append(iphone)
-        print(iphone)
+    return render(request, "apple_shop/categories.html", context=context)
 
-    return render(request, "apple_shop/categories.html", context={"iphones": iphones_list[:6]})
+
+def product_detail(request: HttpRequest, pk: int):
+    """
+    Рендер страницы товара в интернет-магазине
+    """
+    product = Product.objects.get(pk=pk)
+    context = {"product": product}
+    return render(request, "apple_shop/product_detail.html", context=context)
 
 
 def contacts(request: HttpRequest) -> HttpResponse:

@@ -8,6 +8,8 @@ class Category(models.Model):
     """
     name = models.CharField(max_length=150, verbose_name="Наименование категории")
     description = models.TextField(verbose_name="Описание категории")
+    photo = models.ImageField(upload_to="apple_shop/categories/photo", blank=True, null=True,
+                              verbose_name='Фото')
 
     def __str__(self):
         """
@@ -27,7 +29,7 @@ class Product(models.Model):
     """
     name = models.CharField(max_length=150, verbose_name="Наименование товара")
     description = models.TextField(verbose_name="Описание товара")
-    image = models.ImageField(upload_to="apple_shop/products_images",
+    photo = models.ImageField(upload_to="apple_shop/products/photo",
                               blank=True,
                               null=True,
                               verbose_name="Изображение товара")

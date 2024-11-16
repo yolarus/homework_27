@@ -33,9 +33,9 @@
             </div>
             <div class="card-body">
                 <h2>{{ product.price_per_unit }} руб.</h2>
-                <p class="pb-4">{{ product.description }}</p>
+                <p class="pb-4">{{ product.description | truncatechars:100 }}</p>
                 <div class="position-absolute bottom-0 start-0 w-100 container">
-                    <button type="button" class="btn btn-outline-primary w-100 my-2">Купить</button>
+                   <a href="{% url 'apple_shop:product_detail' product.pk %}" class="btn btn-outline-primary w-100 my-2" role="button">Подробнее</a>
                 </div>
             </div>
         </div>
