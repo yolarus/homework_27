@@ -1,7 +1,8 @@
-from django.shortcuts import render
 from django.core.paginator import Paginator
-from django.http import HttpResponse, HttpRequest
-from .models import Product, Category, ContactData
+from django.http import HttpRequest, HttpResponse
+from django.shortcuts import render
+
+from .models import Category, ContactData, Product
 
 
 # Create your views here.
@@ -14,8 +15,7 @@ def index(request: HttpRequest) -> HttpResponse:
     paginator = Paginator(latest_products, 6)
     page_number = request.GET.get("page")
     page_obj = paginator.get_page(page_number)
-    context = {"page_obj": page_obj,
-               "products": latest_products}
+    context = {"page_obj": page_obj}
 
     return render(request, "apple_shop/index.html", context=context)
 
@@ -94,7 +94,7 @@ def owner(request: HttpRequest) -> HttpResponse:
             category=Category.objects.get(name=category),
             photo=photo
         )
-        return HttpResponse("Ваше сообщение успешно отправлено!")
+        return HttpResponse("Новый товар успешно добавлен!")
 
     contact = ContactData.objects.get(id=1)
     context = {"contact": contact}

@@ -1,6 +1,8 @@
 from django.urls import path
-from . import views
+
 from apple_shop.apps import AppleShopConfig
+
+from . import views
 
 app_name = AppleShopConfig.name
 
