@@ -23,23 +23,34 @@ def catalog(request: HttpRequest) -> HttpResponse:
     """
     Рендер страницы "каталог" приложения
     """
-    return render(request, "apple_shop/catalog.html")
+    categories = Category.objects.all()
+    context = {"categories": categories}
+    return render(request, "apple_shop/catalog.html", context=context)
 
 
 def categories(request: HttpRequest) -> HttpResponse:
     """
     Рендер страницы "категории" приложения
     """
-
     categories = Category.objects.all()
     products = Product.objects.all()
     context = {"categories": categories,
                "products": products}
-
     return render(request, "apple_shop/categories.html", context=context)
 
 
-def product_detail(request: HttpRequest, pk: int):
+def category_detail(request: HttpRequest, pk: int) -> HttpResponse:
+    """
+    Рендер страницы категории приложения
+    """
+    category = Category.objects.get(pk=pk)
+    products = Product.objects.filter(category=category)
+    context = {"category": category,
+               "products": products}
+    return render(request, "apple_shop/category_detail.html", context=context)
+
+
+def product_detail(request: HttpRequest, pk: int) -> HttpResponse:
     """
     Рендер страницы товара в интернет-магазине
     """

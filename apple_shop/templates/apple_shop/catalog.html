@@ -1,5 +1,5 @@
 {% extends 'apple_shop/base.html' %}
-
+{% load my_tags %}
 {% block optional_styles %}
     <style>
         #btn-catalog {
@@ -21,80 +21,38 @@
             <h1 class="pt-5 pb-5 text-center">Каталог</h1>
         </div>
     </div>
-
     <div class="row">
-        <div class="col-2"></div>
-        <div class="col-4 ms-5 me-5">
-            <div class="card ps-0 pe-0 w-100">
-                <img src="/static/apple_shop/images/Iphone.jpg" class="card-img-top w-25 mx-auto d-block mt-2"/>
-                <div class="card-body">
-                    <p class="card-text">Самые тонкие рамки — чтобы экран стал еще больше. Выберите свой стиль фотографии. Быстро. Плавно. Оцените новые возможности с Camera Control. В экстренных ситуациях iPhone всегда придет на помощь. </p>
-                    <div class="row">
-                        <div class="btn-group btn-group-sm col-3" role="group">
-                            <button type="button" class="btn btn-outline-secondary">View</button>
-                            <button type="button" class="btn btn-outline-secondary">Edit</button>
+        <div class="col-3"></div>
+        <div class="col-9">
+            <div class="row">
+                {% for category in categories %}
+                    <div class="card col-5 my-2 ms-3 me-3 px-0">
+                        <div class="row">
+                            <div class="col-3"></div>
+                            <div class="col-6">
+                                {% if category.photo %}
+                                <img src="{{ category.photo | media_filter }}" class="card-img-top mx-auto d-block mt-2" height="150px">
+                                {% else %}
+                                    <p>Фотографии товаров категории отсутствуют</p>
+                                {% endif %}
+                            </div>
                         </div>
-                        <div class="col-6"></div>
-                        <div class="col-3 text-end text-secondary"><small>9 mins</small></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-4 ms-5 me-5">
-            <div class="card ps-0 pe-0 w-100">
-                <img src="/static/apple_shop/images/macbook.jpg" class="card-img-top w-50 mx-auto d-block mt-2"/>
-                <div class="card-body">
-                    <p class="card-text">Изящный. Мощный. MacBook с легкостью справляется как с работой, так и с развлечениями, самый востребованный ноутбук в мире. MacBook будет вашим надежным спутником в любых ситуациях.</p>
-                    <div class="row">
-                        <div class="btn-group btn-group-sm col-3" role="group">
-
-                            <button type="button" class="btn btn-outline-secondary">View</button>
-                            <button type="button" class="btn btn-outline-secondary">Edit</button>
+                        <div class="card-body">
+                            <p class="card-text">{{ category.description |truncatechars:150 }}</p>
+                            <div class="row">
+                                <div class="btn-group btn-group-sm col-3" role="group">
+                                    <a href="{% url 'apple_shop:category_detail' category.pk %}" class="btn btn-outline-secondary" role="button">Подробнее</a>
+                                    <button type="button" class="btn btn-outline-secondary">Править</button>
+                                </div>
+                                <div class="col-6"></div>
+                                <div class="col-3 text-end text-secondary"><small>9 mins</small></div>
+                            </div>
                         </div>
-                        <div class="col-6"></div>
-                        <div class="col-3 text-end text-secondary"><small>9 mins</small></div>
                     </div>
-                </div>
+            {% endfor %}
             </div>
         </div>
     </div>
 
-    <div class="row pt-5">
-        <div class="col-2"></div>
-        <div class="col-4 ms-5 me-5">
-            <div class="card ps-0 pe-0 w-100">
-                <img src="/static/apple_shop/images/ipad.jpg" class="card-img-top w-25 mx-auto d-block mt-2"/>
-                <div class="card-body">
-                    <p class="card-text">Невероятно тонкий и лёгкий дизайн. Невообразимая мощность и портативность. Потрясающая производительность, революционная графика и широкие возможности искусственного интеллекта.</p>
-                    <div class="row">
-                        <div class="btn-group btn-group-sm col-3" role="group" aria-label="Простой пример">
-
-                            <button type="button" class="btn btn-outline-secondary">View</button>
-                            <button type="button" class="btn btn-outline-secondary">Edit</button>
-                        </div>
-                        <div class="col-6"></div>
-                        <div class="col-3 text-end text-secondary"><small>9 mins</small></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-4 ms-5 me-5">
-            <div class="card ps-0 pe-0 w-100">
-                <img src="/static/apple_shop/images/watch.jpg" class="card-img-top w-25 mx-auto d-block mt-2"/>
-                <div class="card-body">
-                    <p class="card-text">Звоните, отправляйте сообщения и слушайте музыку, даже когда ваш iPhone не рядом. Получайте информацию о состоянии здоровья круглосуточно. Отслеживайте свою активность и тренировки.</p>
-                    <div class="row">
-                        <div class="btn-group btn-group-sm col-3" role="group" aria-label="Простой пример">
-
-                            <button type="button" class="btn btn-outline-secondary">View</button>
-                            <button type="button" class="btn btn-outline-secondary">Edit</button>
-                        </div>
-                        <div class="col-6"></div>
-                        <div class="col-3 text-end text-secondary"><small>9 mins</small></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 </main>
 {% endblock %}
