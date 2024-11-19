@@ -71,13 +71,13 @@ class CategoryDetailView(DetailView):
         return context
 
 
-def product_detail(request: HttpRequest, pk: int) -> HttpResponse:
+class ProductDetailView(DetailView):
     """
-    Рендер страницы товара в интернет-магазине
+    Класс-представление страницы "Товар"
     """
-    product = Product.objects.get(pk=pk)
-    context = {"product": product}
-    return render(request, "apple_shop/product_detail.html", context=context)
+    model = Product
+    template_name = "apple_shop/product_detail.html"
+    context_object_name = "products"
 
 
 def contacts(request: HttpRequest) -> HttpResponse:
