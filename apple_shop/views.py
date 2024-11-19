@@ -1,8 +1,8 @@
-from django.core.paginator import Paginator
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView
+from django.urls import reverse_lazy
 
 from .models import Category, ContactData, Product
 
@@ -80,21 +80,20 @@ class ProductDetailView(DetailView):
     context_object_name = "products"
 
 
-def contacts(request: HttpRequest) -> HttpResponse:
+class ContactsDetailView(DetailView):
     """
-    Рендер страницы "Контакты" приложения
+    Класс-представление страницы "Контакты"
     """
-    if request.method == "POST":
+    model = ContactData
+    template_name = "apple_shop/contacts.html"
+    context_object_name = "contact"
+
+    def post(self, request, *args, **kwargs):
         name = request.POST.get("name")
         email = request.POST.get("email")
         message = request.POST.get("message")
         print(f"Получено сообщение '{message}' от пользователя {name} ({email})")
         return HttpResponse("Ваше сообщение успешно отправлено!")
-
-    contact = ContactData.objects.get(id=1)
-    context = {"contact": contact}
-
-    return render(request, "apple_shop/contacts.html", context=context)
 
 
 def owner(request: HttpRequest) -> HttpResponse:
