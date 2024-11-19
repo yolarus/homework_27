@@ -38,7 +38,8 @@ class CategoryListView(ListView):
     template_name = "apple_shop/category_list.html"
     context_object_name = "categories"
 
-    def get_products(self):
+    @staticmethod
+    def get_products():
         """
         Получение всех товаров для вывода на страницу
         """
@@ -50,15 +51,24 @@ class CategoryListView(ListView):
         return context
 
 
-def category_detail(request: HttpRequest, pk: int) -> HttpResponse:
+class CategoryDetailView(DetailView):
     """
-    Рендер страницы категории в интернет-магазине
+    Класс-представление страницы "Категория"
     """
-    category = Category.objects.get(pk=pk)
-    products = Product.objects.filter(category=category)
-    context = {"category": category,
-               "products": products}
-    return render(request, "apple_shop/category_detail.html", context=context)
+    model = Category
+    template_name = "apple_shop/category_detail.html"
+    context_object_name = "category"
+
+    def get_products_in_category(self):
+        """
+        Получение товаров категории для вывода на страницу
+        """
+        return Product.objects.filter(category=super().get_object())
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data()
+        context["products"] = self.get_products_in_category()
+        return context
 
 
 def product_detail(request: HttpRequest, pk: int) -> HttpResponse:
