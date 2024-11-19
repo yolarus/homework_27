@@ -30,24 +30,24 @@ class CatalogListView(ListView):
     context_object_name = "categories"
 
 
-# def catalog(request: HttpRequest) -> HttpResponse:
-#     """
-#     Рендер страницы "Каталог" приложения
-#     """
-#     categories = Category.objects.all()
-#     context = {"categories": categories}
-#     return render(request, "apple_shop/catalog.html", context=context)
-
-
-def categories(request: HttpRequest) -> HttpResponse:
+class CategoryListView(ListView):
     """
-    Рендер страницы "Категории" приложения
+    Класс-представление страницы "Категории"
     """
-    categories = Category.objects.all()
-    products = Product.objects.all()
-    context = {"categories": categories,
-               "products": products}
-    return render(request, "apple_shop/categories.html", context=context)
+    model = Category
+    template_name = "apple_shop/category_list.html"
+    context_object_name = "categories"
+
+    def get_products(self):
+        """
+        Получение всех товаров для вывода на страницу
+        """
+        return Product.objects.all()
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data()
+        context["products"] = self.get_products()
+        return context
 
 
 def category_detail(request: HttpRequest, pk: int) -> HttpResponse:
