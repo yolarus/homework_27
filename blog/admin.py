@@ -9,6 +9,6 @@ class ArticleAdmin(admin.ModelAdmin):
     """
     Класс для отображения модели Article в интерфейсе админки
     """
-    list_display = ("id", "title", "body", "created_at", "is_published", "views_count")
+    list_display = ("id", "title", "created_at", "is_published", "views_count")
     list_filter = ("is_published",)
     search_fields = ("title", "body")

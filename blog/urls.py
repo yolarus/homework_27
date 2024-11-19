@@ -7,5 +7,5 @@ from . import views
 app_name = BlogConfig.name
 
 urlpatterns = [
-    # path("", views.IndexListView.as_view(), name="index"),
+    path("index/", views.ArticleListView.as_view(), name="index"),
 ]

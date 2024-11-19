@@ -1,0 +1,54 @@
+{% extends 'blog/base.html' %}
+{% load my_tags %}
+{% block optional_styles %}
+    <style>
+        #btn-index {
+        background-color: #0d6efd;
+        border-radius: 5px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<aside> <!-- Боковая панель (сайдбар) -->
+    {% include "blog/tools/navbar.html" %}
+</aside>
+
+<main>
+    <div class="pt-5 pb-5 row">
+        <div class="col-2"></div>
+        <div class="col-10">
+            <h1 class="pt-5 pb-5 text-center">Блог</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3"></div>
+        <div class="col-9">
+            <div class="row">
+                {% for article in articles %}
+                    <div class="card col-5 my-2 ms-3 me-3 px-0">
+                        {% if article.preview %}
+                        <img src="{{ article.preview | media_filter }}" class="card-img-top mx-auto d-block" height="200px">
+                        {% else %}
+                            <p>Превью отсутствует</p>
+                        {% endif %}
+                        <div class="card-body">
+                            <h4 class="card-text">{{ article.title |truncatechars:50 }}</h4>
+                            <p class="card-text">{{ article.body |truncatechars:300 }}</p>
+                            <div class="row">
+                                <div class="btn-group btn-group-sm col-3" role="group">
+                                    <a href="{% url 'blog:index' %}" class="btn btn-outline-secondary" role="button">Подробнее</a>
+                                    <a href="{% url 'blog:index' %}" class="btn btn-outline-secondary" role="button">Добавить</a>
+                                </div>
+                                <div class="col-6"></div>
+                                <div class="col-3 text-end text-secondary"><small>9 mins</small></div>
+                            </div>
+                        </div>
+                    </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+
+</main>
+{% endblock %}
