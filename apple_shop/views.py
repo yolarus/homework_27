@@ -77,7 +77,7 @@ class ProductDetailView(DetailView):
     """
     model = Product
     template_name = "apple_shop/product_detail.html"
-    context_object_name = "products"
+    context_object_name = "product"
 
 
 class ContactsDetailView(DetailView):
@@ -96,26 +96,11 @@ class ContactsDetailView(DetailView):
         return HttpResponse("Ваше сообщение успешно отправлено!")
 
 
-def owner(request: HttpRequest) -> HttpResponse:
+class ProductCreateView(CreateView):
     """
-    Рендер страницы "Владелец" приложения
+    Класс-представление страницы "Владелец"
     """
-    if request.method == "POST":
-        name = request.POST.get("name")
-        description = request.POST.get("description")
-        price_per_unit = request.POST.get("price_per_unit")
-        category = request.POST.get("category")
-        photo = request.FILES.get("photo")
-        Product.objects.create(
-            name=name,
-            description=description,
-            price_per_unit=price_per_unit,
-            category=Category.objects.get(name=category),
-            photo=photo
-        )
-        return HttpResponse("Новый товар успешно добавлен!")
-
-    contact = ContactData.objects.get(id=1)
-    context = {"contact": contact}
-
-    return render(request, "apple_shop/owner.html", context=context)
+    model = Product
+    fields = ["name", "description", "price_per_unit", "category", "photo"]
+    template_name = "apple_shop/owner.html"
+    success_url = reverse_lazy("apple_shop:index")
