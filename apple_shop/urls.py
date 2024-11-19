@@ -7,7 +7,7 @@ from . import views
 app_name = AppleShopConfig.name
 
 urlpatterns = [
-    path("", views.index, name="index"),
+    path("", views.IndexListView.as_view(), name="index"),
     path("catalog/", views.catalog, name="catalog"),
     path("categories/", views.categories, name="categories"),
     path("category_detail/<int:pk>", views.category_detail, name="category_detail"),

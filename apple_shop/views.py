@@ -1,23 +1,24 @@
 from django.core.paginator import Paginator
 from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
+from django.views.generic import ListView, DetailView
+from django.views.generic.edit import CreateView
 
 from .models import Category, ContactData, Product
 
 
 # Create your views here.
-def index(request: HttpRequest) -> HttpResponse:
+class IndexListView(ListView):
     """
-    Рендер страницы "Главная" приложения
+    Класс-представление страницы "Главная"
     """
-    latest_products = Product.objects.all().order_by("-updated_at")
+    model = Product
+    template_name = "apple_shop/index.html"
+    paginate_by = 6
 
-    paginator = Paginator(latest_products, 6)
-    page_number = request.GET.get("page")
-    page_obj = paginator.get_page(page_number)
-    context = {"page_obj": page_obj}
-
-    return render(request, "apple_shop/index.html", context=context)
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.order_by("-updated_at")
 
 
 def catalog(request: HttpRequest) -> HttpResponse:
