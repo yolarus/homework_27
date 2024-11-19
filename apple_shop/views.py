@@ -21,13 +21,22 @@ class IndexListView(ListView):
         return queryset.order_by("-updated_at")
 
 
-def catalog(request: HttpRequest) -> HttpResponse:
+class CatalogListView(ListView):
     """
-    Рендер страницы "Каталог" приложения
+    Класс-представление страницы "Каталог"
     """
-    categories = Category.objects.all()
-    context = {"categories": categories}
-    return render(request, "apple_shop/catalog.html", context=context)
+    model = Category
+    template_name = "apple_shop/catalog.html"
+    context_object_name = "categories"
+
+
+# def catalog(request: HttpRequest) -> HttpResponse:
+#     """
+#     Рендер страницы "Каталог" приложения
+#     """
+#     categories = Category.objects.all()
+#     context = {"categories": categories}
+#     return render(request, "apple_shop/catalog.html", context=context)
 
 
 def categories(request: HttpRequest) -> HttpResponse:
