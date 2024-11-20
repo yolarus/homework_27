@@ -37,8 +37,9 @@
                             <p class="card-text">{{ article.body |truncatechars:300 }}</p>
                             <div class="row">
                                 <div class="btn-group btn-group-sm col-3" role="group">
-                                    <a href="{% url 'blog:index' %}" class="btn btn-outline-secondary" role="button">Подробнее</a>
-                                    <a href="{% url 'blog:index' %}" class="btn btn-outline-secondary" role="button">Добавить</a>
+                                    <a href="{% url 'blog:article_detail' article.pk %}" class="btn btn-outline-primary" role="button">Подробнее</a>
+                                    <a href="{% url 'blog:index' %}" class="btn btn-outline-secondary" role="button">Редактировать</a>
+                                    <a href="{% url 'blog:index' %}" class="btn btn-outline-danger" role="button">Удалить</a>
                                 </div>
                                 <div class="col-6"></div>
                                 <div class="col-3 text-end text-secondary"><small>9 mins</small></div>

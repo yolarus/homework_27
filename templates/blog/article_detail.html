@@ -1,0 +1,50 @@
+{% extends 'blog/base.html' %}
+{% load my_tags %}
+{% block optional_styles %}
+    <style>
+        #btn-index {
+        background-color: #0d6efd;
+        border-radius: 5px;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<aside> <!-- Боковая панель (сайдбар) -->
+    {% include "blog/tools/navbar.html" %}
+</aside>
+
+<main>
+    <div class="pt-5 pb-5 row">
+        <div class="col-2"></div>
+        <div class="col-10">
+            <h1 class="pt-5 text-center">{{ article.title }}</h1>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-3"></div>
+        <div class="card col-8 ps-0 pe-0 ms-4 me-5 my-3 container">
+            <div class="card-header text-center">
+                <h4>{{ article.title }}</h4>
+            </div>
+            <div class="card-body">
+                <div class="text-center">
+                {% if article.preview %}
+                    <img src="{{ article.preview | media_filter }}" class="w-50 mb-2">
+                {% else %}
+                    <p>Превью статьи отсутствует</p>
+                {% endif %}
+                </div>
+                <p>{{ article.body }}</p>
+                <div class="row">
+                    <small class="col-4 text-secondary">Опубликовано: {{ article.created_at | date:"d.m.y P" }}</small>
+                    <div class="col-5"></div>
+                    <small class="col-3 text-end text-secondary">Просмотров: {{ article.views_count }}</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
