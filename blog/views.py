@@ -30,7 +30,7 @@ class ArticleCreateView(CreateView):
     """
     model = Article
     fields = ["title", "body", "preview"]
-    template_name = "blog/owner.html"
+    template_name = "blog/editor.html"
     success_url = reverse_lazy("blog:index")
 
 
@@ -40,5 +40,14 @@ class ArticleUpdateView(UpdateView):
     """
     model = Article
     fields = ["title", "body", "preview"]
-    template_name = "blog/owner.html"
+    template_name = "blog/editor.html"
+    success_url = reverse_lazy("blog:index")
+
+
+class ArticleDeleteView(DeleteView):
+    """
+    Класс-представление для удаления статьи
+    """
+    model = Article
+    template_name = "blog/article_confirm_delete.html"
     success_url = reverse_lazy("blog:index")
