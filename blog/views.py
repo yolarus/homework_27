@@ -32,3 +32,13 @@ class ArticleCreateView(CreateView):
     fields = ["title", "body", "preview"]
     template_name = "blog/owner.html"
     success_url = reverse_lazy("blog:index")
+
+
+class ArticleUpdateView(UpdateView):
+    """
+    Класс-представление для обновления статьи
+    """
+    model = Article
+    fields = ["title", "body", "preview"]
+    template_name = "blog/owner.html"
+    success_url = reverse_lazy("blog:index")

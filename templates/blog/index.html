@@ -38,7 +38,7 @@
                             <div class="row position-absolute bottom-0 my-2">
                                 <div class="btn-group btn-group-sm col-3" role="group">
                                     <a href="{% url 'blog:article_detail' article.pk %}" class="btn btn-outline-primary" role="button">Подробнее</a>
-                                    <a href="{% url 'blog:index' %}" class="btn btn-outline-secondary" role="button">Редактировать</a>
+                                    <a href="{% url 'blog:article_update' article.pk %}" class="btn btn-outline-secondary" role="button">Редактировать</a>
                                     <a href="{% url 'blog:index' %}" class="btn btn-outline-danger" role="button">Удалить</a>
                                 </div>
                                 <div class="col-5"></div>
