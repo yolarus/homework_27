@@ -30,19 +30,19 @@
                         {% if article.preview %}
                         <img src="{{ article.preview | media_filter }}" class="card-img-top mx-auto d-block" height="200px">
                         {% else %}
-                            <p>Превью отсутствует</p>
+                            <p class="text-center">Превью отсутствует</p>
                         {% endif %}
                         <div class="card-body">
-                            <h4 class="card-text">{{ article.title |truncatechars:50 }}</h4>
-                            <p class="card-text">{{ article.body |truncatechars:300 }}</p>
-                            <div class="row">
+                            <h4 class="text-center">{{ article.title |truncatechars:50 }}</h4>
+                            <p class="card-text mb-4">{{ article.body |truncatechars:300 }}</p>
+                            <div class="row position-absolute bottom-0 my-2">
                                 <div class="btn-group btn-group-sm col-3" role="group">
                                     <a href="{% url 'blog:article_detail' article.pk %}" class="btn btn-outline-primary" role="button">Подробнее</a>
                                     <a href="{% url 'blog:index' %}" class="btn btn-outline-secondary" role="button">Редактировать</a>
                                     <a href="{% url 'blog:index' %}" class="btn btn-outline-danger" role="button">Удалить</a>
                                 </div>
-                                <div class="col-6"></div>
-                                <div class="col-3 text-end text-secondary"><small>9 mins</small></div>
+                                <div class="col-5"></div>
+                                <div class="col-4 text-end text-secondary"><small>Просмотров: {{ article.views_count}}</small></div>
                             </div>
                         </div>
                     </div>

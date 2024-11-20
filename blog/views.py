@@ -1,5 +1,6 @@
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy
 
 from .models import Article
 
@@ -21,3 +22,13 @@ class ArticleDetailView(DetailView):
     model = Article
     template_name = "blog/article_detail.html"
     context_object_name = "article"
+
+
+class ArticleCreateView(CreateView):
+    """
+    Класс-представление для создания статьи
+    """
+    model = Article
+    fields = ["title", "body", "preview"]
+    template_name = "blog/owner.html"
+    success_url = reverse_lazy("blog:index")

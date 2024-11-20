@@ -25,7 +25,7 @@ class CatalogListView(ListView):
     Класс-представление страницы "Каталог"
     """
     model = Category
-    template_name = "apple_shop/index.html"
+    template_name = "apple_shop/catalog.html"
     context_object_name = "categories"
 
 
