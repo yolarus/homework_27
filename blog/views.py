@@ -1,12 +1,11 @@
-from django.views.generic import ListView, DetailView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy, reverse
+from os import getenv
+
 from django.core.mail import send_mail
+from django.urls import reverse, reverse_lazy
+from django.views.generic import DetailView, ListView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from .models import Article
-
-from dotenv import load_dotenv
-from os import getenv
 
 
 # Create your views here.
