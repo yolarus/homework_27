@@ -12,7 +12,7 @@ class Article(models.Model):
                                 verbose_name="Фото для превью",
                                 blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
-    is_published = models.BooleanField(verbose_name="Статус", default=True)
+    is_published = models.BooleanField(verbose_name="Опубликовать", default=True)
     views_count = models.PositiveIntegerField(verbose_name="Количество просмотров", default=0)
 
     def __str__(self):
