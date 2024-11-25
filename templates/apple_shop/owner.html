@@ -34,17 +34,18 @@
     <div class="row">
         <div class="col-4"></div>
         <div class="col-5 ms-5 me-5">
-            <div class="card px-3 py-3 w-100">
+            <div class="card px-3 py-3 w-100 text-center">
                 <form action="#" method="post" enctype='multipart/form-data'>
                     {% csrf_token %}
                     {{ form.as_p }}
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-outline-primary">
                         {% if product %}
                         Сохранить
                         {% else %}
                         Создать
                         {% endif %}
                     </button>
+                    <a href="{% url 'apple_shop:index' %}" class="btn btn-outline-secondary">Отменить</a>
                 </form>
             </div>
         </div>
