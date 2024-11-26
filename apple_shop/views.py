@@ -1,10 +1,10 @@
 from django.http import HttpResponse
 from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, ListView
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
-from .models import Category, ContactData, Product
 from .forms import ProductForm
+from .models import Category, ContactData, Product
 
 
 # Create your views here.

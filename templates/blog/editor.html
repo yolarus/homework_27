@@ -25,7 +25,11 @@
     <div class="row">
         <div class="col-2"></div>
         <div class="col-10">
+            {% if article %}
+            <p class="text-center">Здесь вы можете отредактировать статью блога</p>
+            {% else %}
             <p class="text-center">Здесь вы можете добавить новую статью в блог</p>
+            {% endif %}
         </div>
     </div>
 
