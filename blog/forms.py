@@ -30,5 +30,5 @@ class ArticleForm(ModelForm):
             "class": "form-control"
         })
         self.fields["is_published"].widget.attrs.update({
-            "class": "form-checkbox"
+            "class": "form-check-input"
         })

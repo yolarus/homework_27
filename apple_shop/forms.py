@@ -1,4 +1,4 @@
-from django.forms import ModelForm
+from django.forms import ModelForm, ImageField
 from django.core.exceptions import ValidationError
 
 from .models import Product
@@ -33,7 +33,7 @@ class ProductForm(ModelForm):
             "class": "form-control"
         })
         self.fields["category"].widget.attrs.update({
-            "class": "form-control"
+            "class": "form-select"
         })
         self.fields["price_per_unit"].widget.attrs.update({
             "class": "form-control"
@@ -67,3 +67,15 @@ class ProductForm(ModelForm):
             if word in description.lower():
                 self.add_error("description", f"В описании товара не может содержаться слово '{word}'")
         return description
+
+    def clean_photo(self):
+        photo = self.files.get("photo")
+        max_size = 5 * 1024 ** 2
+        if photo:
+            if photo.size > max_size:
+                raise ValidationError("Размер изображения не должен превышать 5 Мб")
+            elif photo.content_type not in ["image/jpeg", "image/jpg", "image/png"]:
+                raise ValidationError("Можно загрузить файлы только форматов JPEG, JPG, PNG")
+            return photo
+        else:
+            return False
