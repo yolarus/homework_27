@@ -6,6 +6,7 @@ from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from .models import Article
+from .forms import ArticleForm
 
 
 # Create your views here.
@@ -51,7 +52,7 @@ class ArticleCreateView(CreateView):
     Класс-представление для создания статьи
     """
     model = Article
-    fields = ["title", "body", "preview", "is_published"]
+    form_class = ArticleForm
     template_name = "blog/editor.html"
     success_url = reverse_lazy("blog:index")
 
@@ -61,7 +62,7 @@ class ArticleUpdateView(UpdateView):
     Класс-представление для обновления статьи
     """
     model = Article
-    fields = ["title", "body", "preview", "is_published"]
+    form_class = ArticleForm
     template_name = "blog/editor.html"
     success_url = reverse_lazy("blog:index")
 

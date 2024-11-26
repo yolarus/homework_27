@@ -3,6 +3,8 @@ from django.core.exceptions import ValidationError
 
 from .models import Product
 
+BAD_WORDS = ["казино", "криптовалюта", "крипта", "биржа", "дешево", "бесплатно", "обман", "полиция", "радар"]
+
 
 class ProductForm(ModelForm):
     """
@@ -12,11 +14,56 @@ class ProductForm(ModelForm):
         model = Product
         fields = "__all__"
 
-    def clean(self):
-        cleaned_data = super().clean()
-        bad_words = ["казино", "криптовалюта", "крипта", "биржа", "дешево", "бесплатно", "обман", "полиция", "радар"]
+    def __init__(self, *args, **kwargs):
+        """
+        Стилизация формы при инициализации
+        """
+        super(ProductForm, self).__init__(*args, **kwargs)
 
-        for word in bad_words:
-            if word in cleaned_data["name"].lower() or word in cleaned_data["description"].lower():
-                raise ValidationError(f"В названии или описании товара не может содержаться слово '{word}'")
-        return cleaned_data
+        self.fields["name"].widget.attrs.update({
+            "class": "form-control",
+            "placeholder": "Название товара"
+        })
+        self.fields["description"].widget.attrs.update({
+            "class": "form-control",
+            "placeholder": "Описание товара",
+            "rows": 4
+        })
+        self.fields["photo"].widget.attrs.update({
+            "class": "form-control"
+        })
+        self.fields["category"].widget.attrs.update({
+            "class": "form-control"
+        })
+        self.fields["price_per_unit"].widget.attrs.update({
+            "class": "form-control"
+        })
+
+    def clean_price_per_unit(self):
+        """
+        Проверка, что цена товара неотрицательна
+        """
+        price_per_unit = self.cleaned_data["price_per_unit"]
+        if price_per_unit < 0:
+            raise ValidationError("Цена товара не может быть меньше нуля")
+        return price_per_unit
+
+    def clean_name(self):
+        """
+        Проверка наличия нецензурных слов в полях name и description
+        """
+        name = self.cleaned_data["name"]
+        for word in BAD_WORDS:
+            if word in name.lower():
+                self.add_error("name", f"В названии товара не может содержаться слово '{word}'")
+        return name
+
+    def clean_description(self):
+        """
+        Проверка наличия нецензурных слов в полях name и description
+        """
+        description = self.cleaned_data["description"]
+        for word in BAD_WORDS:
+            if word in description.lower():
+                self.add_error("description", f"В описании товара не может содержаться слово '{word}'")
+        return description
