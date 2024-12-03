@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
     "apple_shop",
     "blog",
+    "users",
 ]
 
 MIDDLEWARE = [
@@ -137,10 +138,11 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = getenv("EMAIL_HOST")
 EMAIL_USE_SSL = True
 EMAIL_PORT = getenv("EMAIL_PORT")
 EMAIL_HOST_USER = getenv("EMAIL_USER")
 EMAIL_HOST_PASSWORD = getenv("EMAIL_PASSWORD")
+
+AUTH_USER_MODEL = "users.User"
