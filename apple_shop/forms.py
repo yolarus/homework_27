@@ -53,22 +53,31 @@ class ProductForm(ModelForm):
         Проверка наличия нецензурных слов в полях name и description
         """
         name = self.cleaned_data["name"]
-        for word in BAD_WORDS:
-            if word in name.lower():
-                self.add_error("name", f"В названии товара не может содержаться слово '{word}'")
-        return name
+        return self.check_bad_words("name", name)
 
     def clean_description(self):
         """
         Проверка наличия нецензурных слов в полях name и description
         """
         description = self.cleaned_data["description"]
+        return self.check_bad_words("description", description)
+
+    def check_bad_words(self, field: str, data: str):
+        """
+        Проверка наличия нецензурных слов в переданном поле
+        :param field: Имя поля формы
+        :param data: Значение, введенное в поле формы
+        :return: Значение, введенное в поле формы
+        """
         for word in BAD_WORDS:
-            if word in description.lower():
-                self.add_error("description", f"В описании товара не может содержаться слово '{word}'")
-        return description
+            if word in data.lower():
+                self.add_error(field, f"В данном поле не может содержаться слово '{word}'")
+        return data
 
     def clean_photo(self):
+        """
+        Проверка веса и формата загружаемой фотографии
+        """
         photo = self.files.get("photo")
         max_size = 5 * 1024 ** 2
         if photo:
