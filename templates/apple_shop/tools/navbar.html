@@ -1,4 +1,4 @@
-
+{% load my_tags %}
 <div class="position-fixed col-2 vh-100 position-relative container overflow-hidden bg-dark text-white" data-bs-theme="dark">
     <nav class="navbar-expand-lg"> <!-- Меню страницы -->
         <div class="border-bottom py-3">
@@ -46,17 +46,36 @@
         </div>
         <div class="position-absolute bottom-0 start-0 w-100 container">
             <div class="border-top py-3">
-                <div class="btn-group dropup">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img class="icon rounded-circle" src="/static/navbar/nyancat.gif" width="40" height="40">
-                    Пользователь
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Профиль</a></li>
-                        <li><a class="dropdown-item" href="#">Выход</a></li>
-                    </ul>
+
+                    {% if user.is_authenticated %}
+                    <div class="btn-group dropup">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {% if user.avatar %}
+                            <img class="icon rounded-circle" src="{{ user.avatar | media_filter }}" width="40" height="40">
+                            {% endif %}
+                        {{ user.email }}
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Профиль</a></li>
+                            <li><a class="dropdown-item" href="#">Выход</a></li>
+                        </ul>
+                    </div>
+                    {% else %}
+<!--                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">-->
+<!--                    Войти-->
+<!--                    </a>-->
+<!--                    <ul class="dropdown-menu text-center">-->
+<!--                        <li><a class="dropdown-item" href="#">Регистрация</a></li>-->
+<!--                        <li><a class="dropdown-item" href="#">Вход</a></li>-->
+<!--                    </ul>-->
+                    <div class="text-center">
+                        <div class="btn-group btn-group" role="group">
+                        <a href="{% url 'users:register' %}" class="btn btn-dark" role="button">Регистрация</a>
+                        <a href="{% url 'users:login' %}" class="btn btn-dark" role="button">Вход</a>
+                    </div>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
-        </div>
     </nav>
 </div>

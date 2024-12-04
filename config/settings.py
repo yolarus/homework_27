@@ -115,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "ru"
 
 TIME_ZONE = "UTC"
 
@@ -146,3 +146,6 @@ EMAIL_HOST_USER = getenv("EMAIL_USER")
 EMAIL_HOST_PASSWORD = getenv("EMAIL_PASSWORD")
 
 AUTH_USER_MODEL = "users.User"
+
+LOGIN_REDIRECT_URL = "apple_shop:index"
+LOGOUT_REDIRECT_URL = "apple_shop:index"
