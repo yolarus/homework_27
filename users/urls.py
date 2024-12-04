@@ -12,4 +12,5 @@ urlpatterns = [
     path("login/", views.LoginUserView.as_view(template_name="users/login.html"), name="login"),
     path("logout/", LogoutView.as_view(next_page="apple_shop:index"), name="logout"),
     path("email-confirm/<str:token>/", views.email_verification, name="email-confirm"),
+    path("profile/<int:pk>/", views.UserProfileView.as_view(), name="profile"),
 ]

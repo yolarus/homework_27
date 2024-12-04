@@ -5,11 +5,11 @@ from django.contrib.auth.views import LoginView
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse, reverse_lazy
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 
 from config.settings import EMAIL_HOST_USER
 
-from .forms import LoginUserForm, UserRegisterForm
+from .forms import LoginUserForm, UserProfileForm, UserRegisterForm
 from .models import User
 
 
@@ -49,3 +49,10 @@ def email_verification(request, token):
 
 class LoginUserView(LoginView):
     form_class = LoginUserForm
+
+
+class UserProfileView(UpdateView):
+    model = User
+    template_name = "users/user_form.html"
+    form_class = UserProfileForm
+    success_url = reverse_lazy("apple_shop:index")

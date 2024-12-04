@@ -1,4 +1,5 @@
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.forms import ModelForm
 
 from .models import User
 
@@ -51,3 +52,52 @@ class LoginUserForm(AuthenticationForm):
             "class": "form-control",
             "placeholder": "Введите пароль"
         })
+
+
+class UserProfileForm(ModelForm):
+    """
+    Форма для страницы информации о пользователе интернет-магазина
+    """
+    class Meta:
+        model = User
+        fields = ["email", "username", "first_name", "last_name", "phone_number", "country", "avatar"]
+
+    def __init__(self, *args, **kwargs):
+        """
+        Стилизация формы при инициализации
+        """
+        super(UserProfileForm, self).__init__(*args, **kwargs)
+
+        self.fields["email"].widget.attrs.update({
+            "class": "form-control",
+            "placeholder": "Email"
+        })
+
+        self.fields["username"].widget.attrs.update({
+            "class": "form-control",
+            "placeholder": "Введите ник"
+        })
+
+        self.fields["first_name"].widget.attrs.update({
+            "class": "form-control",
+            "placeholder": "Введите имя"
+        })
+
+        self.fields["last_name"].widget.attrs.update({
+            "class": "form-control",
+            "placeholder": "Введите фамилию"
+        })
+
+        self.fields["phone_number"].widget.attrs.update({
+            "class": "form-control",
+            "placeholder": "Введите телефон"
+        })
+        self.fields["country"].widget.attrs.update({
+            "class": "form-control",
+            "placeholder": "Введите страну"
+        })
+
+        self.fields["avatar"].widget.attrs.update({
+            "class": "form-control",
+        })
+

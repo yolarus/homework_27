@@ -4,9 +4,10 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
+from config.settings import EMAIL_HOST_USER
+
 from .forms import ArticleForm
 from .models import Article
-from config.settings import EMAIL_HOST_USER
 
 
 # Create your views here.
