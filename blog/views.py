@@ -1,5 +1,4 @@
-from os import getenv
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, ListView
@@ -7,6 +6,7 @@ from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
 from .forms import ArticleForm
 from .models import Article
+from config.settings import EMAIL_HOST_USER
 
 
 # Create your views here.
@@ -23,7 +23,7 @@ class ArticleListView(ListView):
         return queryset.filter(is_published=True)
 
 
-class ArticleDetailView(DetailView):
+class ArticleDetailView(LoginRequiredMixin, DetailView):
     """
     Класс-представление страницы "Статья"
     """
@@ -42,12 +42,12 @@ class ArticleDetailView(DetailView):
         if self.object.views_count == 100:
             send_mail(subject="Вы почти блогер!",
                       message="Поздравляем! Вы становитесь популярным!",
-                      from_email=getenv("EMAIL_HOST_USER"),
-                      recipient_list=[getenv("EMAIL_RECIPIENT")])
+                      from_email=EMAIL_HOST_USER,
+                      recipient_list=[EMAIL_HOST_USER])
         return self.object
 
 
-class ArticleCreateView(CreateView):
+class ArticleCreateView(LoginRequiredMixin, CreateView):
     """
     Класс-представление для создания статьи
     """
@@ -57,7 +57,7 @@ class ArticleCreateView(CreateView):
     success_url = reverse_lazy("blog:index")
 
 
-class ArticleUpdateView(UpdateView):
+class ArticleUpdateView(LoginRequiredMixin, UpdateView):
     """
     Класс-представление для обновления статьи
     """
@@ -73,7 +73,7 @@ class ArticleUpdateView(UpdateView):
         return reverse("blog:article_detail", args=[self.kwargs.get("pk")])
 
 
-class ArticleDeleteView(DeleteView):
+class ArticleDeleteView(LoginRequiredMixin, DeleteView):
     """
     Класс-представление для удаления статьи
     """

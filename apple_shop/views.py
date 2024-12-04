@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, ListView
@@ -71,7 +72,7 @@ class CategoryDetailView(DetailView):
         return context
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(LoginRequiredMixin, DetailView):
     """
     Класс-представление страницы "Товар"
     """
@@ -96,7 +97,7 @@ class ContactsDetailView(DetailView):
         return HttpResponse("Ваше сообщение успешно отправлено!")
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     """
     Класс-представление страницы "Владелец"
     """
@@ -106,7 +107,7 @@ class ProductCreateView(CreateView):
     success_url = reverse_lazy("apple_shop:index")
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     """
     Класс-представление страницы "Владелец"
     """
@@ -122,7 +123,7 @@ class ProductUpdateView(UpdateView):
         return reverse("apple_shop:product_detail", args=[self.kwargs.get("pk")])
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
     """
     Класс-представление страницы "Владелец"
     """
