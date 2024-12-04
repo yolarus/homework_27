@@ -40,11 +40,11 @@ class ArticleDetailView(LoginRequiredMixin, DetailView):
         self.object.views_count += 1
         self.object.save()
 
-        if self.object.views_count == 100:
+        if self.object.views_count == 59:
             send_mail(subject="Вы почти блогер!",
                       message="Поздравляем! Вы становитесь популярным!",
                       from_email=EMAIL_HOST_USER,
-                      recipient_list=[EMAIL_HOST_USER])
+                      recipient_list=[self.object.editor.email])
         return self.object
 
 
@@ -57,6 +57,16 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
     template_name = "blog/editor.html"
     success_url = reverse_lazy("blog:index")
 
+    def form_valid(self, form):
+        """
+        Сохранение редактора статьи блога
+        """
+        article = form.save()
+        user = self.request.user
+        article.editor = user
+        article.save()
+        return super().form_valid(form)
+
 
 class ArticleUpdateView(LoginRequiredMixin, UpdateView):
     """
@@ -66,6 +76,16 @@ class ArticleUpdateView(LoginRequiredMixin, UpdateView):
     form_class = ArticleForm
     template_name = "blog/editor.html"
     success_url = reverse_lazy("blog:index")
+
+    def form_valid(self, form):
+        """
+        Сохранение редактора статьи блога
+        """
+        article = form.save()
+        user = self.request.user
+        article.editor = user
+        article.save()
+        return super().form_valid(form)
 
     def get_success_url(self):
         """

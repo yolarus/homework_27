@@ -24,6 +24,9 @@ class UserRegisterView(CreateView):
     success_url = reverse_lazy("users:login")
 
     def form_valid(self, form):
+        """
+        Отправка письма с верификацией после регистрации пользователя
+        """
         user = form.save()
         user.is_active = False
         user.token = secrets.token_hex(16)
@@ -39,7 +42,7 @@ class UserRegisterView(CreateView):
 
 def email_verification(request, token):
     """
-    Отправка письма с верификацией после регистрации пользователя
+    Проверка верификации пользователя
     """
     user = get_object_or_404(User, token=token)
     user.is_active = True
@@ -48,10 +51,16 @@ def email_verification(request, token):
 
 
 class LoginUserView(LoginView):
+    """
+    Класс-представление для страницы входа пользователя
+    """
     form_class = LoginUserForm
 
 
 class UserProfileView(UpdateView):
+    """
+    Класс-представление для обновления информации о пользователе
+    """
     model = User
     template_name = "users/user_form.html"
     form_class = UserProfileForm

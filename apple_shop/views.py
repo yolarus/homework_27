@@ -106,6 +106,16 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
     template_name = "apple_shop/owner.html"
     success_url = reverse_lazy("apple_shop:index")
 
+    def form_valid(self, form):
+        """
+        Сохранение продавца товара интернет-магазина
+        """
+        product = form.save()
+        user = self.request.user
+        product.seller = user
+        product.save()
+        return super().form_valid(form)
+
 
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
     """
@@ -115,6 +125,16 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
     form_class = ProductForm
     template_name = "apple_shop/owner.html"
     success_url = reverse_lazy("apple_shop:index")
+
+    def form_valid(self, form):
+        """
+        Сохранение продавца товара интернет-магазина
+        """
+        product = form.save()
+        user = self.request.user
+        product.seller = user
+        product.save()
+        return super().form_valid(form)
 
     def get_success_url(self):
         """

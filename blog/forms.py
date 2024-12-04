@@ -1,5 +1,7 @@
 from django.forms import ModelForm
+from django.core.exceptions import ValidationError
 
+from src.utils import check_photo
 from .models import Article
 
 
@@ -9,7 +11,7 @@ class ArticleForm(ModelForm):
     """
     class Meta:
         model = Article
-        exclude = ["views_count"]
+        exclude = ["views_count", "editor"]
 
     def __init__(self, *args, **kwargs):
         """
@@ -32,3 +34,10 @@ class ArticleForm(ModelForm):
         self.fields["is_published"].widget.attrs.update({
             "class": "form-check-input"
         })
+
+    def clean_preview(self):
+        """
+        Проверка веса и формата загружаемой фотографии
+        """
+        preview = self.files.get("preview")
+        check_photo(preview)
