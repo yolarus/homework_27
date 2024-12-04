@@ -1,3 +1,4 @@
+{% load my_tags %}
 
 <div class="position-fixed col-2 vh-100 position-relative container overflow-hidden bg-dark text-white" data-bs-theme="dark">
     <nav class="navbar-expand-lg"> <!-- Меню страницы -->
@@ -26,18 +27,34 @@
                 Редактор
             </a>
         </div>
-        <div class="position-absolute bottom-0 start-0 w-100 container">
+        <div class="position-absolute bottom-0 start-0 w-100 container text-center">
             <div class="border-top py-3">
+                {% if user.is_authenticated %}
                 <div class="btn-group dropup">
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img class="icon rounded-circle" src="/static/navbar/nyancat.gif" width="40" height="40">
-                    Пользователь
+                        {% if user.avatar %}
+                        <img class="icon rounded-circle" src="{{ user.avatar | media_filter }}" width="40" height="40">
+                        {% endif %}
+                    {{ user.email | truncatechars:15 }}
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Профиль</a></li>
-                        <li><a class="dropdown-item" href="#">Выход</a></li>
+                        <li><a class="dropdown-item text-start" href="#">Профиль</a></li>
+                        <li class="text-start">
+                            <form method="post" action="{% url 'users:logout' %}" class="dropdown-item">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-link nav-link">Выход</button>
+                            </form>
+                        </li>
                     </ul>
                 </div>
+                {% else %}
+                <div class="text-center">
+                    <div class="btn-group btn-group" role="group">
+                    <a href="{% url 'users:register' %}" class="btn btn-dark" role="button">Регистрация</a>
+                    <a href="{% url 'users:login' %}" class="btn btn-dark" role="button">Вход</a>
+                </div>
+                </div>
+                {% endif %}
             </div>
         </div>
     </nav>

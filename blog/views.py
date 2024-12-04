@@ -42,7 +42,7 @@ class ArticleDetailView(DetailView):
         if self.object.views_count == 100:
             send_mail(subject="Вы почти блогер!",
                       message="Поздравляем! Вы становитесь популярным!",
-                      from_email=getenv("EMAIL_USER"),
+                      from_email=getenv("EMAIL_HOST_USER"),
                       recipient_list=[getenv("EMAIL_RECIPIENT")])
         return self.object
 

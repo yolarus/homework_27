@@ -26,6 +26,11 @@ class User(AbstractUser):
                                null=True,
                                blank=True)
 
+    token = models.CharField(max_length=100,
+                             verbose_name="Токен верификации",
+                             null=True,
+                             blank=True)
+
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
