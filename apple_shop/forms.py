@@ -1,5 +1,7 @@
 from django.core.exceptions import ValidationError
-from django.forms import ImageField, ModelForm
+from django.forms import ModelForm
+
+from src.utils import check_photo
 
 from .models import Product
 
@@ -12,7 +14,7 @@ class ProductForm(ModelForm):
     """
     class Meta:
         model = Product
-        fields = "__all__"
+        exclude = ["seller"]
 
     def __init__(self, *args, **kwargs):
         """
@@ -79,12 +81,4 @@ class ProductForm(ModelForm):
         Проверка веса и формата загружаемой фотографии
         """
         photo = self.files.get("photo")
-        max_size = 5 * 1024 ** 2
-        if photo:
-            if photo.size > max_size:
-                raise ValidationError("Размер изображения не должен превышать 5 Мб")
-            elif photo.content_type not in ["image/jpeg", "image/jpg", "image/png"]:
-                raise ValidationError("Можно загрузить файлы только форматов JPEG, JPG, PNG")
-            return photo
-        else:
-            return False
+        check_photo(photo)

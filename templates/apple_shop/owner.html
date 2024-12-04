@@ -2,7 +2,7 @@
 
 {% block optional_styles %}
     <style>
-        #btn-owner {
+        #btn-seller {
         background-color: #0d6efd;
         border-radius: 5px;
         }
@@ -18,7 +18,13 @@
     <div class="pt-5 pb-2 row">
         <div class="col-2"></div>
         <div class="col-10">
-            <h1 class="pt-5 text-center">Владелец</h1>
+            <h1 class="pt-5 text-center">
+                {% if product %}
+                {{ product.name }}
+                {% else %}
+                Продавец
+                {% endif %}
+            </h1>
         </div>
     </div>
     <div class="row">

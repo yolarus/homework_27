@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, ListView
@@ -71,7 +72,7 @@ class CategoryDetailView(DetailView):
         return context
 
 
-class ProductDetailView(DetailView):
+class ProductDetailView(LoginRequiredMixin, DetailView):
     """
     Класс-представление страницы "Товар"
     """
@@ -96,7 +97,7 @@ class ContactsDetailView(DetailView):
         return HttpResponse("Ваше сообщение успешно отправлено!")
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     """
     Класс-представление страницы "Владелец"
     """
@@ -105,8 +106,18 @@ class ProductCreateView(CreateView):
     template_name = "apple_shop/owner.html"
     success_url = reverse_lazy("apple_shop:index")
 
+    def form_valid(self, form):
+        """
+        Сохранение продавца товара интернет-магазина
+        """
+        product = form.save()
+        user = self.request.user
+        product.seller = user
+        product.save()
+        return super().form_valid(form)
 
-class ProductUpdateView(UpdateView):
+
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     """
     Класс-представление страницы "Владелец"
     """
@@ -114,6 +125,16 @@ class ProductUpdateView(UpdateView):
     form_class = ProductForm
     template_name = "apple_shop/owner.html"
     success_url = reverse_lazy("apple_shop:index")
+
+    def form_valid(self, form):
+        """
+        Сохранение продавца товара интернет-магазина
+        """
+        product = form.save()
+        user = self.request.user
+        product.seller = user
+        product.save()
+        return super().form_valid(form)
 
     def get_success_url(self):
         """
@@ -122,7 +143,7 @@ class ProductUpdateView(UpdateView):
         return reverse("apple_shop:product_detail", args=[self.kwargs.get("pk")])
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin, DeleteView):
     """
     Класс-представление страницы "Владелец"
     """

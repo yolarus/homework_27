@@ -39,8 +39,18 @@
                 </div>
                 <p>{{ article.body }}</p>
                 <div class="row">
-                    <small class="col-4 text-secondary">Опубликовано: {{ article.created_at | date:"d.m.y P" }}</small>
-                    <div class="col-5"></div>
+
+                    {% if article.editor %}
+                    <small class="col-6 text-secondary">
+                        Опубликовано: {{ article.created_at | date:"d.m.y P" }} редактором: {{ article.editor}}
+                    </small>
+                    <div class="col-2"></div>
+                    {% else %}
+                    <small class="col-4 text-secondary">
+                        Опубликовано: {{ article.created_at | date:"d.m.y P" }}
+                    </small>
+                    <div class="col-4"></div>
+                    {% endif %}
                     <small class="col-3 text-end text-secondary">Просмотров: {{ article.views_count }}</small>
                 </div>
             </div>

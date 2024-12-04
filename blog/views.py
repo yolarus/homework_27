@@ -1,9 +1,10 @@
-from os import getenv
-
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, ListView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
+
+from config.settings import EMAIL_HOST_USER
 
 from .forms import ArticleForm
 from .models import Article
@@ -23,7 +24,7 @@ class ArticleListView(ListView):
         return queryset.filter(is_published=True)
 
 
-class ArticleDetailView(DetailView):
+class ArticleDetailView(LoginRequiredMixin, DetailView):
     """
     Класс-представление страницы "Статья"
     """
@@ -42,12 +43,12 @@ class ArticleDetailView(DetailView):
         if self.object.views_count == 100:
             send_mail(subject="Вы почти блогер!",
                       message="Поздравляем! Вы становитесь популярным!",
-                      from_email=getenv("EMAIL_USER"),
-                      recipient_list=[getenv("EMAIL_RECIPIENT")])
+                      from_email=EMAIL_HOST_USER,
+                      recipient_list=[self.object.editor.email])
         return self.object
 
 
-class ArticleCreateView(CreateView):
+class ArticleCreateView(LoginRequiredMixin, CreateView):
     """
     Класс-представление для создания статьи
     """
@@ -56,8 +57,18 @@ class ArticleCreateView(CreateView):
     template_name = "blog/editor.html"
     success_url = reverse_lazy("blog:index")
 
+    def form_valid(self, form):
+        """
+        Сохранение редактора статьи блога
+        """
+        article = form.save()
+        user = self.request.user
+        article.editor = user
+        article.save()
+        return super().form_valid(form)
 
-class ArticleUpdateView(UpdateView):
+
+class ArticleUpdateView(LoginRequiredMixin, UpdateView):
     """
     Класс-представление для обновления статьи
     """
@@ -66,6 +77,16 @@ class ArticleUpdateView(UpdateView):
     template_name = "blog/editor.html"
     success_url = reverse_lazy("blog:index")
 
+    def form_valid(self, form):
+        """
+        Сохранение редактора статьи блога
+        """
+        article = form.save()
+        user = self.request.user
+        article.editor = user
+        article.save()
+        return super().form_valid(form)
+
     def get_success_url(self):
         """
         Перенаправление на страницу статьи
@@ -73,7 +94,7 @@ class ArticleUpdateView(UpdateView):
         return reverse("blog:article_detail", args=[self.kwargs.get("pk")])
 
 
-class ArticleDeleteView(DeleteView):
+class ArticleDeleteView(LoginRequiredMixin, DeleteView):
     """
     Класс-представление для удаления статьи
     """

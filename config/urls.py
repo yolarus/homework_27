@@ -25,4 +25,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("apple_shop/", include("apple_shop.urls", namespace="apple_shop")),
     path("blog/", include("blog.urls", namespace="blog")),
+    path("users/", include("users.urls", namespace="users")),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
