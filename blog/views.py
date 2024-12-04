@@ -40,7 +40,7 @@ class ArticleDetailView(LoginRequiredMixin, DetailView):
         self.object.views_count += 1
         self.object.save()
 
-        if self.object.views_count == 59:
+        if self.object.views_count == 100:
             send_mail(subject="Вы почти блогер!",
                       message="Поздравляем! Вы становитесь популярным!",
                       from_email=EMAIL_HOST_USER,

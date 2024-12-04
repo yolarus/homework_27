@@ -1,7 +1,8 @@
 from django.core.exceptions import ValidationError
-from django.forms import ImageField, ModelForm
+from django.forms import ModelForm
 
 from src.utils import check_photo
+
 from .models import Product
 
 BAD_WORDS = ["казино", "криптовалюта", "крипта", "биржа", "дешево", "бесплатно", "обман", "полиция", "радар"]

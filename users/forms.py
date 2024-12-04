@@ -1,8 +1,8 @@
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.core.exceptions import ValidationError
 from django.forms import ModelForm
 
 from src.utils import check_photo
+
 from .models import User
 
 
